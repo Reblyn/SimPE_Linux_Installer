@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=SimPE
-Icon="~/.local/share/simpe/drive_c/Program Files (x86)/SimPe/SimPe.ico"
+Icon=~/.local/share/simpe/drive_c/Program Files (x86)/SimPe/SimPe.ico
 Exec=WINEPREFIX=~/.local/share/simpe wine "~/.local/share/simpe/drive_c/Program Files (x86)/SimPe/SimPe.exe" %U
 Categories=Game
