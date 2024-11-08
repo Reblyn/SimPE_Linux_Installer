@@ -47,7 +47,7 @@ WINEPREFIX=~/.local/share/simpe WINEDEBUG=-all winetricks dotnet40 2>&1 >/dev/nu
 
 #download and unpack simpe
 echo "Installing SimPe"
-DOWNLOAD_URL=$(curl -s https://api.github.com/repos/reblyn/SimPe_Linux_Installer/releases/latest | grep "browser_download_url" | grep -o "https://.*\.tar\.gz")
+DOWNLOAD_URL=$(curl -s https://api.github.com/repos/reblyn/SimPe_Linux_Installer/releases/latest | grep "browser_download_url" | grep -o "https://.*SimPe\.tar\.gz")
 #NOTE: for some reason wget and tar don't like the shortcut '~' to the home directory
 wget -q $DOWNLOAD_URL -O "/home/$USER/.local/share/simpe/drive_c/Program Files (x86)/SimPe.tar.gz"
 if [ ! $? -eq 0 ]; then
@@ -63,3 +63,19 @@ rm "/home/$USER/.local/share/simpe/drive_c/Program Files (x86)/SimPe.tar.gz"
 #same here, have to replace ~ with the full path
 echo "Creating start menu entry"
 curl -s "https://raw.githubusercontent.com/Reblyn/SimPE_Linux_Installer/refs/heads/main/SimPe.desktop" | sed "s/~/\/home\/$USER/g" > ~/.local/share/applications/SimPe.desktop
+
+#Download and install Nvidia DDS
+#If Jensen Huang is reading this, sorry for probably violating the software license
+#But you should really fix your linux drivers
+echo "Installing Nvidia DDS Utilities"
+mkdir "/home/$USER/.local/share/simpe/drive_c/Program Files (x86)/NVIDIA Corporation"
+DOWNLOAD_URL=$(curl -s https://api.github.com/repos/reblyn/SimPe_Linux_Installer/releases/latest | grep "browser_download_url" | grep -o "https://.*DDS-Utilities\.tar\.gz")
+wget -q $DOWNLOAD_URL -O "/home/$USER/.local/share/simpe/drive_c/Program Files (x86)/NVIDIA Corporation/DDS-Utilities.tar.gz"
+if [ ! $? -eq 0 ]; then
+	echo "Failed to download DDS-Utilities"
+	echo "Tried downloading from the following link:"
+	echo $DOWNLOAD_URL
+	exit
+fi
+tar --warning=no-unknown-keyword -xf "/home/$USER/.local/share/simpe/drive_c/Program Files (x86)/NVIDIA Corporation/DDS-Utilities.tar.gz" -C "/home/$USER/.local/share/simpe/drive_c/Program Files (x86)/NVIDIA Corporation"
+rm "/home/$USER/.local/share/simpe/drive_c/Program Files (x86)/NVIDIA Corporation/DDS-Utilities.tar.gz"
