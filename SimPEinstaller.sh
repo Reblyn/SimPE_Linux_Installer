@@ -84,25 +84,25 @@ rm "/home/$USER/.local/share/simpe/drive_c/Program Files (x86)/NVIDIA Corporatio
 echo "Finding Sims 2 installs..."
 INSTALLS=$(find /home/$USER -name "Sims2EP9.exe")
 #one install found, set its basepath
-if [ $(wc -l $INSTALLS) -eq 1 ]; then
+if [ $(echo "$INSTALLS" | wc -l) -eq 1 ]; then
 	BASEFOLDER=$(echo "$INSTALLS" | sed 's/.\{37\}$//' | sed 's/\//\\/g')
 fi
 #no install found, exit
-if [ $(wc -l $INSTALLS) -eq 0 ]; then
+if [ $(echo "$INSTALLS" | wc -l) -eq 0 ]; then
 	echo "No Sims 2 install found, exiting..."
 	exit
 fi
 #multiple installs found, ask user which install to use
-if [ $(wc -l $INSTALLS) -gt 1 ]; then
+if [ $(echo "$INSTALLS" | wc -l) -gt 1 ]; then
 	echo "Found the following Sims 2 installs:"
-	echo $INSTALLS
+	echo "$INSTALLS"
 	echo "Please copy and paste the path you would like to set as your Sims 2 install"
 	echo "(Note that copying and pasting in the terminal are done with Ctrl+Shift+C and Ctrl+Shift+V, as Ctrl+C would abort the install)"
 	read -p "Path: " INSTALLS
 	BASEFOLDER=$(echo "$INSTALLS" | sed 's/.\{37\}$//' | sed 's/\//\\/g')
 fi
 
-if [[ -z $BASEFOLDER ]; then
+if [[ -z $BASEFOLDER ]]; then
 	echo "Failed finding Sims 2 installation folder, exiting."
 	exit
 fi
